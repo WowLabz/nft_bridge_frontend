@@ -2,6 +2,7 @@
 import { WsProvider, ApiPromise } from '@polkadot/api';
 import { ApiTypes, SubmittableExtrinsic } from '@polkadot/api-base/types';
 import { web3FromAddress } from '@polkadot/extension-dapp';
+import axios from 'axios';
 import { CONSTANTS } from '../constants/constants';
 
 interface Owner{
@@ -13,7 +14,8 @@ interface PolkadotNft{
     description: string,
     metadata: string,
     collectionId: string,
-    nftId: string
+    nftId: string,
+    image: string
 }
 
 export async function transferUserNftToSelf(collectionId: string|number, nftId: string|number, accountId: string) {
@@ -45,6 +47,7 @@ export async function fetchUserNfts(accountId: string): Promise<PolkadotNft[]> {
         if(latestNftIndex){
             for(let j=0; j<=latestNftIndex; j++){
                 const nft = await getNftDetails(api, i, j);
+                // console.log('got nft = ', nft);
                 if(nft){
                     if(nft.owner.AccountId === accountId){
                         nft.collectionId = i.toString();
@@ -72,12 +75,24 @@ async function getLatestNftIndex (api: ApiPromise, collectionIndex: string|numbe
 };
 
 async function getNftDetails(api: ApiPromise, collectionId: string|number, nftId: string|number): Promise<PolkadotNft|null>{
-  if (api === null) return null;
+    if (api === null) return null;
 
-  const nftHex = await api.query.metahomeNft.nfts(collectionId, nftId);
+    const nftHex = await api.query.metahomeNft.nfts(collectionId, nftId);
     const nftHuman = <any>nftHex.toHuman();
+    if(!nftHuman){
+        return null;
+    }
+    const metadataUri = nftHuman.metadata;
+    console.log('metadata uri = ',metadataUri);
+    const res = await axios.get(metadataUri);
+    const metadata = <any>JSON.parse(res.data);
     const nft = <PolkadotNft>nftHuman;
-  return nft;
+    nft.nftName = metadata.name;
+    nft.description = metadata.description;
+    nft.image = metadata.image;
+    nft.metadata = metadataUri;
+    // console.log('the nft is = ',nft);
+    return nft;
 };
 
 async function handleTransaction(transaction: SubmittableExtrinsic<ApiTypes>, accountId: string){

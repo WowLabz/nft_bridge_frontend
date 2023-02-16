@@ -1,13 +1,18 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .modalButton{
+    @apply bg-orange-50 hover:bg-gray-200 border-solid border-2 text-center w-[250px] m-5 h-20 rounded-xl text-[18px]
+  }
+  body{
+    @apply bg-[#f0f0f3]
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer base {
+  .wlistItem {
+    @apply m-5 h-[50px] hover:cursor-pointer hover:bg-gray-200 border-solid border-2 bg-[#ffffff50] border-[#fff] rounded-[86px] shadow-lg flex  items-center justify-center
+  }
 }

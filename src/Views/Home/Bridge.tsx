@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown, Loader } from 'semantic-ui-react';
 import { ethereumToPolkadot, polkadotToEthereum } from '../../controller/nftTransferController';
-import { NftType } from './nftCard';
+import { NftType } from '../Transfer';
 import NftsOwned from './NftsOwned';
 
 import ConnectWallet from './walletConnect';
@@ -124,7 +124,7 @@ const Bridge = (props: BridgeProps) => {
             </div>
             { account && (
                 <div style={{ display: nftVisibility }}>
-                <NftsOwned  address={typeof account === typeof "" ? account : account.address} type={type} handleTransfer={handleTransfer}/>
+                    {/*<NftsOwned  address={typeof account === typeof "" ? account : account.address} type={type} handleTransfer={handleTransfer}/> */}
             </div>
             ) }
         </div>

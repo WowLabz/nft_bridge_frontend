@@ -5,7 +5,9 @@ import Web3 from 'web3';
 import { CONSTANTS } from '../constants/constants';
 import { AbiItem } from 'web3-utils';
 import { ethers } from 'ethers';
-import { NftType } from '../Views/Home/nftCard';
+import { NftType } from '../Views/Transfer';
+// import { NftType } from '../Views/Home/nftCard';
+
 
 export async function fetchEvmNfts(account: string): Promise<any[]>{
     const api = `https://testnets-api.opensea.io/api/v1/assets?owner=${account}`;
@@ -44,7 +46,7 @@ export async function approveNft(contractAddress: string, nftId: number | string
     console.log('transaction status : ',approveTxn);
 }
 
-export async function getCustomTokenDetails(contractAddress: string, nftId: number | string): Promise<NftType | null> {
+export async function getCustomTokenDetails(contractAddress: string, nftId: string | number): Promise<NftType | null> {
     const { ethereum } = window;
     if(!ethereum) {
         alert("wallet not found!");
@@ -56,15 +58,16 @@ export async function getCustomTokenDetails(contractAddress: string, nftId: numb
     // const contract = new ethers.Contract(contractAddress, abi);
     const web3 = new Web3(provider);
     const contract = new web3.eth.Contract(abi, contractAddress);
-    console.log("Contract = ", contract);
     const owner = await contract.methods.ownerOf(nftId).call();
-    const metadata = await contract.methods.tokenURI(nftId).call();
+    const tokenUri = await contract.methods.tokenURI(nftId).call();
+    const result = await axios.get(tokenUri);
+    const metadata = JSON.parse(result.data);
     const nft: NftType = {
-        metadata,
+        metadata: tokenUri,
         owner,
-        nftId,
+        tokenId: nftId,
         contractAddress,
-        collectionId: null
+        image: metadata.image
     };
     console.log('this is the nft: ',nft);
     return nft;
