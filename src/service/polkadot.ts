@@ -83,9 +83,10 @@ async function getNftDetails(api: ApiPromise, collectionId: string|number, nftId
         return null;
     }
     const metadataUri = nftHuman.metadata;
-    console.log('metadata uri = ',metadataUri);
     const res = await axios.get(metadataUri);
-    const metadata = <any>JSON.parse(res.data);
+    if(typeof res.data === typeof "") return null;
+
+    const metadata = res.data;
     const nft = <PolkadotNft>nftHuman;
     nft.nftName = metadata.name;
     nft.description = metadata.description;
