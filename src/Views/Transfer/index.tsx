@@ -6,7 +6,7 @@ import { ethereumToPolkadot, polkadotToEthereum } from '../../controller/nftTran
 import { CombineReducerType } from '../../reducers';
 import { fetchEvmNfts, getCustomTokenDetails } from '../../service/ethereum';
 import { fetchUserNfts } from '../../service/polkadot';
-import { ChainType } from '../Home2/SelectModal';
+import { ChainType } from '../Home2/';
 import ImportModal from './ImportModal';
 import NftCard from './NftCard';
 

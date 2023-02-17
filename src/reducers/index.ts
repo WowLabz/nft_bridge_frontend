@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ChainType } from '../Views/Home2/SelectModal';
+import { ChainType } from '../Views/Home2';
 
 interface ActionType {
     type: string;

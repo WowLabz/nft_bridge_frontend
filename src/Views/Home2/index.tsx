@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import ConnectWalletModal from "./ConnectWalletModal";
-import SelectModal, { ChainType, ModalData } from "./SelectModal";
 import { connect } from "react-redux";
 import { CombineReducerType } from "../../reducers";
 import { connectEth, connectPolka, setSourceChain } from "../../actions";
-import { FaExchangeAlt } from "react-icons/fa";
 import polkadot from "../../assets/polkadot.png";
 import polygon from "../../assets/polygon.png";
 import revert from "../../assets/refresh.svg";
 import { useNavigate } from "react-router-dom";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
+
+
+export interface ChainType {
+    id: number;
+    name: string;
+    value: string;
+    icon: string;
+}
+
 
 interface HomePropsType {
   sourceChain: ChainType;
@@ -18,16 +24,19 @@ interface HomePropsType {
   connectPolka: (polka: any) => any;
 }
 
+declare global {
+  interface Window{
+    ethereum: any
+  }
+}
+
+
 const Home = (props: any) => {
   // not able to assign HomePropsType to this
 
   const { setSourceChain, sourceChain, connectEth, connectPolka } = props;
 
-  const [openModal, setOpenModal] = useState(false);
-  const [modalData, setModalData] = useState({ source: false, heading: "" });
   const [source, setSource] = useState("Polkadot");
-  const [target, setTarget] = useState("");
-  const [departure, setDeparture] = useState("Polkadot");
 
   const navigate = useNavigate();
 
@@ -58,11 +67,9 @@ const Home = (props: any) => {
   };
 
   const handleToggle = () => {
-    if (departure === "Polkadot") {
-      setDeparture("Polygon");
+    if (source === "Polkadot") {
       setSource("Polygon");
     } else {
-      setDeparture("Polkadot");
       setSource("Polkadot");
     }
   };
@@ -90,15 +97,6 @@ const Home = (props: any) => {
     },
   ];
 
-  const onChainSelectClick = (source: boolean, heading: string) => {
-    const tempModalData: ModalData = {
-      source,
-      heading,
-    };
-    setModalData(tempModalData);
-    // setHeading(heading);
-    setOpenModal(true);
-  };
 
   useEffect(() => {
     if (source) {
@@ -110,28 +108,6 @@ const Home = (props: any) => {
   }, [source]);
 
   return (
-    // <div className="text-center flex flex-col items-center justify-center h-screen rounded-xl">
-    //     <div className=" w-[500px] h-[600px] bg-white rounded-lg shadow-md border-2 text-center flex flex-col items-center justify-center">
-    //     <div>
-    //         <h1 className="font-bold text-[24px]">Transfer NFTs between Polkadot and Polygon</h1>
-    //     </div>
-    //     <div className="p-4">
-    //         <div className="my-4">
-    //             <div><label className="text-[20px]">Departure Chain</label></div>
-    //            <div><button className="modalButton" onClick={() => onChainSelectClick(true, "Select Departure Chain")}>{source ? source : "Select Departure Chain"}</button></div>
-    //         </div>
-    //         <div className="my-4">
-    //             <div><label className="text-[20px]">Destination Chain</label></div>
-    //             <div><button disabled={!source} className="modalButton disabled:opacity-50 disabled:cursor-not-allowed" onClick={() => onChainSelectClick(false, "Select Destination Chain")}>{target ? target : "Select Destination Chain"}</button></div>
-    //         </div>
-    //     </div>
-    //     <div className={!(source && target) ? "hidden" : ""}>
-    //     <button onClick={() => setOpenWalletModal(true)} className="border-solid border-2 h-[50px] w-[150px] rounded-xl hover:opacity-75 bg-green-600 text-slate-50">Continue</button>
-    //     </div>
-    //     <div><SelectModal open={openModal} setOpen={setOpenModal} data={modalData} options={options} source={source} setSource={setSource} setTarget={setTarget} /></div>
-    //     <div><ConnectWalletModal open={openWalletModal} setOpen={setOpenWalletModal}/></div>
-    //     </div>
-    // </div>
     <div className="bg-hero h-[100vh]  bg-no-repeat bg-cover bg-center bg-fixed flex items-center justify-center ">
       <div
         style={{
@@ -147,15 +123,10 @@ const Home = (props: any) => {
           <div className="flex flex-col items-center">
             <h4>Departure Chain</h4>
             <div className="bg-white p-8 border-2 border-[#5743DF] rounded-lg">
-              <img src={departure === "Polkadot" ? polkadot : polygon} alt="" />
+              <img src={source === "Polkadot" ? polkadot : polygon} alt="" />
             </div>
           </div>
           <div>
-            {/* <FaExchangeAlt
-              size={28}
-              className="cursor-pointer active:scale-90"
-              onClick={handleToggle}
-            /> */}
             <img
               src={revert}
               alt=""
@@ -166,7 +137,7 @@ const Home = (props: any) => {
           <div className="flex flex-col items-center">
             <h4>Destination Chain</h4>
             <div className="bg-white p-8 border-2 border-[#5743DF] rounded-lg">
-              <img src={departure === "Polygon" ? polkadot : polygon} alt="" />
+              <img src={source === "Polygon" ? polkadot : polygon} alt="" />
             </div>
           </div>
         </div>
