@@ -12,6 +12,13 @@ import { fetchUserNfts } from "../../service/polkadot";
 import { ChainType } from "../Home2/";
 import ImportModal from "./ImportModal";
 import NftCard from "./NftCard";
+import successGIF from "../../assets/success.gif";
+import error from "../../assets/error.gif";
+import wave1 from "../../assets/wave1.png";
+import wave2 from "../../assets/wave2.png";
+import wave3 from "../../assets/wave3.png";
+import { BiMessageSquareAdd } from "react-icons/bi";
+import { RingLoader } from "react-spinners";
 
 interface TransferType {
   sourceChain: ChainType;
@@ -302,9 +309,9 @@ const Transfer = (props: TransferType) => {
     // </div>
     <>
       <div className="relative">
-        <img src={wave1} alt="" className="absolute top-0 opacity-70" />
-        <img src={wave2} alt="" className="absolute top-0 opacity-70" />
-        <img src={wave3} alt="" className="absolute top-0 opacity-70" />
+        <img src={wave1} alt="" className="absolute top-0 " />
+        <img src={wave2} alt="" className="absolute top-0 " />
+        <img src={wave3} alt="" className="absolute top-0 " />
       </div>
       <div
         className={`
