@@ -7,15 +7,14 @@ import polygon from "../../assets/polygon.png";
 import revert from "../../assets/refresh.svg";
 import { useNavigate } from "react-router-dom";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
-
+import logo from "../../assets/logo.png";
 
 export interface ChainType {
-    id: number;
-    name: string;
-    value: string;
-    icon: string;
+  id: number;
+  name: string;
+  value: string;
+  icon: string;
 }
-
 
 interface HomePropsType {
   sourceChain: ChainType;
@@ -25,11 +24,10 @@ interface HomePropsType {
 }
 
 declare global {
-  interface Window{
-    ethereum: any
+  interface Window {
+    ethereum: any;
   }
 }
-
 
 const Home = (props: any) => {
   // not able to assign HomePropsType to this
@@ -97,7 +95,6 @@ const Home = (props: any) => {
     },
   ];
 
-
   useEffect(() => {
     if (source) {
       const tmpSource = options.find((option) => option.value === source);
@@ -108,46 +105,64 @@ const Home = (props: any) => {
   }, [source]);
 
   return (
-    <div className="bg-hero h-[100vh]  bg-no-repeat bg-cover bg-center bg-fixed flex items-center justify-center ">
-      <div
+    <div className="bg-hero h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed ">
+      <nav
         style={{
-          background: "rgba(255, 255, 255, .70)",
-          boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.12)",
+          backgroundColor: "transparent",
         }}
-        className="w-[700px] h-[400px] rounded-md pt-10"
+        className="w-full p-3"
       >
-        <h2 className="font-pop text-gray-900">
-          Transfer NFTs between Polkadot and Polygon
-        </h2>
-        <div className="flex items-center justify-around pt-[7%]">
-          <div className="flex flex-col items-center">
-            <h4>Departure Chain</h4>
-            <div className="bg-white p-8 border-2 border-[#5743DF] rounded-lg">
-              <img src={source === "Polkadot" ? polkadot : polygon} alt="" />
-            </div>
-          </div>
-          <div>
-            <img
-              src={revert}
-              alt=""
-              className="cursor-pointer w-12 h-12 rotate-90 active:scale-90"
-              onClick={handleToggle}
-            />
-          </div>
-          <div className="flex flex-col items-center">
-            <h4>Destination Chain</h4>
-            <div className="bg-white p-8 border-2 border-[#5743DF] rounded-lg">
-              <img src={source === "Polygon" ? polkadot : polygon} alt="" />
-            </div>
+        <div className="mx-auto max-w-[90rem] px-2 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-start gap-3">
+            <img src={logo} alt="" className="w-[50px] h-[50px]" />
+            {/* <h2 className="font-orbitron text-gray-900 font-[500] my-auto">
+              MetaBridge
+            </h2> */}
           </div>
         </div>
-        <div className="pt-10">
-          <button
-            onClick={handleContinue}
-            className="px-14 py-4 bg-[#5743DF] text-white font-pop rounded-md"
-          >
-            Continue
-          </button>
+      </nav>
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-10vh)] ">
+        <div
+          style={{
+            backdropFilter: "blur(16px) saturate(180%)",
+            background: "rgba(255, 255, 255, .70)",
+            boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.12)",
+          }}
+          className="w-[700px] h-[400px] rounded-md pt-10"
+        >
+          <h2 className="font-pop text-gray-900">
+            Transfer NFTs between Polkadot and Polygon
+          </h2>
+          <div className="flex items-center justify-around pt-[7%]">
+            <div className="flex flex-col items-center">
+              <h4>Departure Chain</h4>
+              <div className="bg-white p-8 border-2 border-[#5743DF] rounded-lg">
+                <img src={source === "Polkadot" ? polkadot : polygon} alt="" />
+              </div>
+            </div>
+            <div>
+              <img
+                src={revert}
+                alt=""
+                className="cursor-pointer w-12 h-12 rotate-90 active:scale-90"
+                onClick={handleToggle}
+              />
+            </div>
+            <div className="flex flex-col items-center">
+              <h4>Destination Chain</h4>
+              <div className="bg-white p-8 border-2 border-[#5743DF] rounded-lg">
+                <img src={source === "Polygon" ? polkadot : polygon} alt="" />
+              </div>
+            </div>
+          </div>
+          <div className="pt-10">
+            <button
+              onClick={handleContinue}
+              className="px-14 py-4 bg-[#5743DF] text-white font-pop rounded-md"
+            >
+              Continue
+            </button>
+          </div>
         </div>
       </div>
     </div>

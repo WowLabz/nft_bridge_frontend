@@ -19,6 +19,7 @@ import wave2 from "../../assets/wave2.png";
 import wave3 from "../../assets/wave3.png";
 import { BiMessageSquareAdd } from "react-icons/bi";
 import { RingLoader } from "react-spinners";
+import logo from "../../assets/logo.png";
 
 interface TransferType {
   sourceChain: ChainType;
@@ -313,6 +314,22 @@ const Transfer = (props: TransferType) => {
         <img src={wave2} alt="" className="absolute top-0 " />
         <img src={wave3} alt="" className="absolute top-0 " />
       </div>
+      <nav
+        // style={{
+        //   backdropFilter: "blur(16px) saturate(180%)",
+        //   backgroundColor: "rgba(255, 255, 255, 0.5)",
+        // }}
+        className="w-full p-3 absolute top-4"
+      >
+        <div className="mx-auto max-w-[90rem] px-2 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-start gap-3">
+            <img src={logo} alt="" className="w-[60px] h-[60px]" />
+            {/* <h2 className="font-orbitron text-gray-900 font-[500] my-auto">
+              MetaBridge
+            </h2> */}
+          </div>
+        </div>
+      </nav>
       <div
         className={`
         } bg-[#f1f1f1]  flex flex-col items-center justify-center gap-8 pt-[15%] pb-10`}
