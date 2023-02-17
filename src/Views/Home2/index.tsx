@@ -36,7 +36,7 @@ const Home = (props: any) => {
 
   const { setSourceChain, sourceChain, connectEth, connectPolka } = props;
 
-  const [source, setSource] = useState("Polkadot");
+  const [source, setSource] = useState<string>("Polkadot");
 
   const navigate = useNavigate();
 
