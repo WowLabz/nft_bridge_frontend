@@ -33,6 +33,6 @@ export const CONSTANTS = {
     ABI: abi.abi,
     POLKADOT_ADDRESS: '5ELXsKZCm71TXXUz9C9CixyvS9HmnMMcdWBPuoYJU47ohVai',
     NFT_RECEIVER: '0x2A2bd5C235fdFC7081a55c9064A9545527DBf887',
-    ETHTOPOLKAURI: 'http://localhost:8331/ethereum-to-polkadot',
-    POLKATOETHURI: 'http://localhost:8331/polkadot-to-ethereum',
+    ETHTOPOLKAURI: 'https://backendnftbridge.metaport.to/ethereum-to-polkadot',
+    POLKATOETHURI: 'https://backendnftbridge.metaport.to/polkadot-to-ethereum',
 }
