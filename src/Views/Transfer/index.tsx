@@ -152,7 +152,8 @@ const Transfer = (props: TransferType) => {
     tokenId: string | number
   ) => {
     const customToken = await getCustomTokenDetails(contractAddress, tokenId);
-    if (customToken) {
+    console.log('eth wallet = ',ethWallet);
+    if (customToken && customToken.owner.toUpperCase() === ethWallet.toUpperCase()) {
       const tempNftCollection = [...nftCollection];
       tempNftCollection.push(customToken);
       setNftCollection(tempNftCollection);
