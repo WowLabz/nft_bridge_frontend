@@ -61,7 +61,7 @@ export async function getCustomTokenDetails(contractAddress: string, nftId: stri
     const owner = await contract.methods.ownerOf(nftId).call();
     const tokenUri = await contract.methods.tokenURI(nftId).call();
     const result = await axios.get(tokenUri);
-    const metadata = JSON.parse(result.data);
+    const metadata = result.data;
     const nft: NftType = {
         metadata: tokenUri,
         owner,
